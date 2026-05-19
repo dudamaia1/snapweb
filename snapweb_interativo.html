@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SnapWeb Interativo</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{
+  margin:0;
+  background:linear-gradient(135deg,#5f00ff,#ff0080,#ff7a00);
+  color:#fff;
+  min-height:100vh;
+}
+header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(10px);
+  padding:18px;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+}
+.container{max-width:700px;margin:auto;padding:20px 20px 100px}
+.card{
+  background:rgba(0,0,0,.35);
+  border-radius:24px;
+  padding:20px;
+  margin-bottom:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+input, textarea, select{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+}
+input::placeholder, textarea::placeholder{color:#eee}
+button{
+  border:none;
+  border-radius:999px;
+  padding:10px 14px;
+  cursor:pointer;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  margin-top:10px;
+}
+button:hover{background:rgba(255,255,255,.25)}
+.primary{
+  background:linear-gradient(90deg,#ff7a00,#ff0080);
+  width:100%;
+  font-weight:bold;
+}
+.user{font-size:22px;font-weight:bold}
+.mood{color:#ffd6f2;margin:8px 0}
+.text{font-size:18px;margin:12px 0}
+.reactions{display:flex;gap:8px;flex-wrap:wrap}
+.count{font-weight:bold}
+.nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(12px);
+  display:flex;justify-content:space-around;
+  padding:12px;
+}
+.nav div{text-align:center;font-size:14px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>✨ SnapWeb 💜</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Criar Post</h2>
+    <input id="userInput" placeholder="Seu nome" value="Duda Maia">
+    <select id="moodInput">
+      <option>😄 Feliz</option>
+      <option>🔥 Motivada</option>
+      <option>❤️ Apaixonada</option>
+      <option>🌧️ Triste</option>
+      <option>🌙 Reflexiva</option>
+      <option>😂 Engraçada</option>
+    </select>
+    <textarea id="textInput" rows="4" placeholder="Compartilhe sua vibe..."></textarea>
+    <button class="primary" onclick="addPost()">Publicar ✨</button>
+  </div>
+
+  <div id="feed"></div>
+</div>
+
+<div class="nav">
+  <div onclick="scrollToTop()">🏠<br>Início</div>
+  <div onclick="alert('Explorar em breve!')">🔍<br>Explorar</div>
+  <div onclick="document.getElementById('textInput').focus()">➕<br>Criar</div>
+  <div onclick="alert('Perfil em breve!')">👤<br>Perfil</div>
+</div>
+
+<script>
+let posts = [
+  {
+    user: 'Duda Maia',
+    mood: '😄 Feliz',
+    text: 'Hoje foi um dia incrível! ✨',
+    reactions: {'🔥 Vibrei': 0, '💫 Me identifiquei': 0, '🌱 Me ajudou': 0}
+  },
+  {
+    user: 'Pedro',
+    mood: '❤️ Apaixonado',
+    text: 'A saudade bateu forte hoje.',
+    reactions: {'🖤 Forte isso': 0, '💫 Me identifiquei': 0}
+  }
+];
+
+function savePosts() {
+  localStorage.setItem('snapweb_posts', JSON.stringify(posts));
+}
+
+function loadPosts() {
+  const saved = localStorage.getItem('snapweb_posts');
+  if (saved) posts = JSON.parse(saved);
+}
+
+function renderPosts() {
+  const feed = document.getElementById('feed');
+  feed.innerHTML = '';
+
+  posts.slice().reverse().forEach((post, postIndexReversed) => {
+    const realIndex = posts.length - 1 - postIndexReversed;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    let reactionsHtml = '';
+    for (const [name, count] of Object.entries(post.reactions)) {
+      reactionsHtml += `
+        <button onclick="react(${realIndex}, '${name.replace(/'/g, "\\'")}')">
+          ${name} <span class="count">${count}</span>
+        </button>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="user">${post.user}</div>
+      <div class="mood">${post.mood}</div>
+      <div class="text">${post.text}</div>
+      <div class="reactions">${reactionsHtml}</div>
+      <button onclick="deletePost(${realIndex})">🗑️ Apagar</button>
+    `;
+
+    feed.appendChild(card);
+  });
+}
+
+function addPost() {
+  const user = document.getElementById('userInput').value.trim() || 'Usuário';
+  const mood = document.getElementById('moodInput').value;
+  const text = document.getElementById('textInput').value.trim();
+
+  if (!text) {
+    alert('Digite algo para publicar.');
+    return;
+  }
+
+  posts.push({
+    user,
+    mood,
+    text,
+    reactions: {
+      '🔥 Vibrei': 0,
+      '💫 Me identifiquei': 0,
+      '🌱 Me ajudou': 0
+    }
+  });
+
+  document.getElementById('textInput').value = '';
+  savePosts();
+  renderPosts();
+}
+
+function react(index, reaction) {
+  posts[index].reactions[reaction]++;
+  savePosts();
+  renderPosts();
+}
+
+function deletePost(index) {
+  if (confirm('Deseja apagar este post?')) {
+    posts.splice(index, 1);
+    savePosts();
+    renderPosts();
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+loadPosts();
+renderPosts();
+</script>
+</body>
+</html>
