@@ -12,10 +12,120 @@ content="width=device-width, initial-scale=1.0"
 
 <title>SnapWeb</title>
 
-<link
-rel="stylesheet"
-href="style.css"
-/>
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(
+135deg,
+#5f00ff,
+#ff0080,
+#ff7a00
+);
+color:white;
+padding-bottom:100px;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:rgba(0,0,0,.3);
+backdrop-filter:blur(10px);
+}
+
+.stories{
+display:flex;
+gap:10px;
+overflow:auto;
+padding:20px;
+}
+
+.story{
+min-width:70px;
+height:70px;
+border-radius:50%;
+background:linear-gradient(
+135deg,
+#ff0080,
+#5f00ff
+);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+box-shadow:0 0 20px
+rgba(255,0,128,.6);
+}
+
+.card{
+background:rgba(0,0,0,.3);
+margin:20px;
+padding:20px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,.15);
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:999px;
+background:#ff0080;
+color:white;
+font-size:18px;
+}
+
+.post{
+background:rgba(0,0,0,.3);
+margin:20px;
+padding:20px;
+border-radius:20px;
+}
+
+.message{
+background:rgba(255,255,255,.15);
+padding:10px;
+border-radius:12px;
+margin-top:10px;
+}
+
+.bottom-menu{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:rgba(0,0,0,.5);
+display:flex;
+justify-content:space-around;
+padding:12px;
+backdrop-filter:blur(10px);
+}
+
+.bottom-menu button{
+width:auto;
+background:none;
+font-size:24px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
 
 </head>
 
@@ -33,18 +143,22 @@ Compartilhe sua vibe 💜
 
 <!-- STORIES -->
 
-<section class="stories">
+<div class="stories">
 
 <div class="story">😄</div>
 <div class="story">🔥</div>
 <div class="story">❤️</div>
 <div class="story">🌙</div>
 
-</section>
+</div>
 
-<!-- CRIAR POST -->
+<!-- HOME -->
 
-<section class="create-post">
+<div id="home">
+
+<div class="card">
+
+<h2>Criar Post</h2>
 
 <input
 id="username"
@@ -62,7 +176,6 @@ placeholder="Compartilhe sua vibe..."
 <option>🔥 Motivado</option>
 <option>🌧️ Triste</option>
 <option>❤️ Apaixonado</option>
-<option>🌙 Reflexivo</option>
 
 </select>
 
@@ -72,15 +185,17 @@ Publicar ✨
 
 </button>
 
-</section>
+</div>
 
-<!-- FEED -->
+<div id="feed"></div>
 
-<section id="feed"></section>
+</div>
 
 <!-- CHAT -->
 
-<section class="chat">
+<div id="chatPage" class="hidden">
+
+<div class="card">
 
 <h2>💬 Chat</h2>
 
@@ -97,11 +212,15 @@ Enviar 💜
 
 </button>
 
-</section>
+</div>
+
+</div>
 
 <!-- PERFIL -->
 
-<section class="profile">
+<div id="profilePage" class="hidden">
+
+<div class="card">
 
 <h2>👤 Perfil</h2>
 
@@ -114,25 +233,178 @@ Enviar 💜
 </p>
 
 <button onclick="followUser()">
+
 Seguir 💜
+
 </button>
 
-</section>
+</div>
+
+</div>
 
 <!-- MENU -->
 
-<nav class="bottom-menu">
+<div class="bottom-menu">
 
-<button>🏠</button>
-<button>🔍</button>
-<button>➕</button>
-<button>🫂</button>
-<button>👤</button>
+<button onclick="showPage('home')">
+🏠
+</button>
 
-</nav>
+<button onclick="showPage('chatPage')">
+💬
+</button>
 
-<script src="script.js"></script>
+<button onclick="showPage('profilePage')">
+👤
+</button>
+
+</div>
+
+<script>
+
+let posts = [];
+
+function createPost(){
+
+const username =
+document.getElementById(
+'username'
+).value;
+
+const text =
+document.getElementById(
+'postText'
+).value;
+
+const mood =
+document.getElementById(
+'mood'
+).value;
+
+posts.unshift({
+username,
+text,
+mood,
+likes:0
+});
+
+renderPosts();
+
+}
+
+function renderPosts(){
+
+const feed =
+document.getElementById(
+'feed'
+);
+
+feed.innerHTML='';
+
+posts.forEach((post,index)=>{
+
+feed.innerHTML += `
+
+<div class="post">
+
+<h2>
+${post.username}
+</h2>
+
+<p>
+${post.mood}
+</p>
+
+<p>
+${post.text}
+</p>
+
+<button onclick="likePost(${index})">
+
+❤️ ${post.likes}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+function likePost(index){
+
+posts[index].likes++;
+
+renderPosts();
+
+}
+
+function sendMessage(){
+
+const input =
+document.getElementById(
+'chatInput'
+);
+
+const messages =
+document.getElementById(
+'chatMessages'
+);
+
+if(input.value.trim()==='')
+return;
+
+messages.innerHTML += `
+
+<div class="message">
+
+💜 ${input.value}
+
+</div>
+
+`;
+
+input.value='';
+
+}
+
+let followers = 120;
+
+function followUser(){
+
+followers++;
+
+document.getElementById(
+'followers'
+).innerHTML =
+
+'❤️ Seguidores: ' + followers;
+
+}
+
+function showPage(pageId){
+
+document.getElementById(
+'home'
+).classList.add('hidden');
+
+document.getElementById(
+'chatPage'
+).classList.add('hidden');
+
+document.getElementById(
+'profilePage'
+).classList.add('hidden');
+
+document.getElementById(
+pageId
+).classList.remove('hidden');
+
+}
+
+</script>
 
 </body>
-
-</html>V
+</html>
