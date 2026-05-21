@@ -1,10 +1,62 @@
-<!-- ===== VIBE DO DIA ===== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<div class="card">
+<head>
 
-<h2>🌈 Vibe do Dia</h2>
+<meta charset="UTF-8">
 
-<select id="dailyMood">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>SnapWeb</title>
+
+<link
+rel="stylesheet"
+href="style.css"
+/>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>✨ SnapWeb</h1>
+
+<p>
+Compartilhe sua vibe 💜
+</p>
+
+</header>
+
+<!-- STORIES -->
+
+<section class="stories">
+
+<div class="story">😄</div>
+<div class="story">🔥</div>
+<div class="story">❤️</div>
+<div class="story">🌙</div>
+
+</section>
+
+<!-- CRIAR POST -->
+
+<section class="create-post">
+
+<input
+id="username"
+placeholder="Seu nome"
+/>
+
+<textarea
+id="postText"
+placeholder="Compartilhe sua vibe..."
+></textarea>
+
+<select id="mood">
 
 <option>😄 Feliz</option>
 <option>🔥 Motivado</option>
@@ -14,200 +66,73 @@
 
 </select>
 
-<button onclick="changeVibe()">
-Atualizar Vibe ✨
+<button onclick="createPost()">
+
+Publicar ✨
+
 </button>
 
-</div>
+</section>
 
-<!-- ===== STORIES ===== -->
+<!-- FEED -->
 
-<div class="card">
+<section id="feed"></section>
 
-<h2>📷 Stories</h2>
+<!-- CHAT -->
 
-<div id="stories"
-style="
-display:flex;
-gap:10px;
-overflow:auto;
-">
+<section class="chat">
 
-<div class="story">
-😄
-</div>
+<h2>💬 Chat</h2>
 
-<div class="story">
-🔥
-</div>
+<div id="chatMessages"></div>
 
-<div class="story">
-❤️
-</div>
+<input
+id="chatInput"
+placeholder="Digite..."
+/>
 
-<div class="story">
-🌙
-</div>
+<button onclick="sendMessage()">
 
-</div>
+Enviar 💜
 
-</div>
+</button>
 
-<!-- ===== MINI VIDEOS ===== -->
+</section>
 
-<div class="card">
+<!-- PERFIL -->
 
-<h2>🎥 Mini Vídeos</h2>
+<section class="profile">
 
-<video
-controls
-width="100%"
-style="border-radius:20px;"
->
+<h2>👤 Perfil</h2>
 
-<source
-src="https://www.w3schools.com/html/mov_bbb.mp4"
-type="video/mp4"
->
-
-</video>
-
-</div>
-
-<!-- ===== SEGUIDORES ===== -->
-
-<div class="card">
-
-<h2>❤️ Seguidores</h2>
+<p>
+✨ Usuário SnapWeb
+</p>
 
 <p id="followers">
-120 seguidores
+❤️ Seguidores: 120
 </p>
 
 <button onclick="followUser()">
 Seguir 💜
 </button>
 
-</div>
+</section>
 
-<!-- ===== NOTIFICAÇÕES ===== -->
+<!-- MENU -->
 
-<div class="card">
+<nav class="bottom-menu">
 
-<h2>🔔 Notificações</h2>
+<button>🏠</button>
+<button>🔍</button>
+<button>➕</button>
+<button>🫂</button>
+<button>👤</button>
 
-<div id="notifications">
+</nav>
 
-<div class="message">
-✨ Bem-vinda ao SnapWeb
-</div>
+<script src="script.js"></script>
 
-</div>
+</body>
 
-</div>
-
-<!-- ===== IA EMOCIONAL ===== -->
-
-<div class="card">
-
-<h2>🤖 IA Emocional</h2>
-
-<button onclick="aiEmotion()">
-Analisar Humor 💜
-</button>
-
-<div id="aiResult"></div>
-
-</div>
-
-<script>
-
-/* ===== VIBE ===== */
-
-function changeVibe(){
-
-const mood =
-document.getElementById(
-'dailyMood'
-).value;
-
-document.body.style.background = `
-linear-gradient(
-135deg,
-#5f00ff,
-#ff0080,
-#ff7a00
-)
-`;
-
-addNotification(
-'🌈 Sua vibe mudou para ' + mood
-);
-
-}
-
-/* ===== SEGUIDORES ===== */
-
-let followers = 120;
-
-function followUser(){
-
-followers++;
-
-document.getElementById(
-'followers'
-).innerHTML =
-followers + ' seguidores';
-
-addNotification(
-'❤️ Novo seguidor!'
-);
-
-}
-
-/* ===== NOTIFICAÇÕES ===== */
-
-function addNotification(text){
-
-document.getElementById(
-'notifications'
-).innerHTML += `
-
-<div class="message">
-
-${text}
-
-</div>
-
-`;
-
-}
-
-/* ===== IA ===== */
-
-function aiEmotion(){
-
-const result =
-document.getElementById(
-'aiResult'
-);
-
-result.innerHTML = `
-
-<div class="message">
-
-💜 IA:
-Continue compartilhando
-sua energia positiva ✨
-
-</div>
-
-`;
-
-addNotification(
-'🤖 IA analisou seu humor'
-);
-
-}
-
-</script>
+</html>V
