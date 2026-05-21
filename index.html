@@ -1,53 +1,41 @@
-v<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html>
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
 <title>SnapWeb</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
 body{
 margin:0;
-font-family:Arial;
 background:#111;
+font-family:Arial;
 color:white;
 }
 
-/* HEADER */
-
-header{
-background:#1c1c1c;
+.top{
+background:#ff0080;
 padding:20px;
 text-align:center;
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 }
-
-/* MENU */
 
 .menu{
 display:flex;
 justify-content:space-around;
 background:#222;
 padding:10px;
-position:sticky;
-top:0;
 }
 
 .menu button{
 background:none;
 border:none;
 color:white;
-font-size:24px;
+font-size:25px;
 }
-
-/* PÁGINAS */
 
 .page{
 display:none;
@@ -58,90 +46,47 @@ padding:20px;
 display:block;
 }
 
-/* STORIES */
-
-.stories{
-display:flex;
-gap:10px;
-overflow:auto;
-margin-bottom:20px;
-}
-
-.story{
-min-width:70px;
-height:70px;
-border-radius:50%;
-background:linear-gradient(
-135deg,
-#ff0080,
-#5f00ff
-);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:30px;
-}
-
-/* POSTS */
-
-.post{
+.card{
 background:#1e1e1e;
 padding:20px;
 border-radius:20px;
 margin-bottom:20px;
 }
 
-/* INPUTS */
-
-input,
-textarea,
-select{
+input,textarea{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
 border-radius:10px;
-background:#2a2a2a;
+background:#333;
 color:white;
 }
-
-/* BOTÕES */
 
 button{
 padding:12px;
 border:none;
-border-radius:999px;
+border-radius:20px;
 background:#ff0080;
 color:white;
 margin-top:10px;
 }
 
-/* CHAT */
-
-.message{
-background:#2a2a2a;
-padding:10px;
-border-radius:10px;
-margin-top:10px;
+.storybox{
+display:flex;
+gap:10px;
+overflow:auto;
 }
 
-/* PERFIL */
-
-.profile{
-text-align:center;
-}
-
-.avatar{
-width:120px;
-height:120px;
+.story{
+min-width:70px;
+height:70px;
 border-radius:50%;
-background:linear-gradient(
-135deg,
-#ff0080,
-#5f00ff
-);
-margin:auto;
-margin-bottom:20px;
+background:#ff0080;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
 }
 
 </style>
@@ -150,27 +95,25 @@ margin-bottom:20px;
 
 <body>
 
-<header>
+<div class="top">
 ✨ SnapWeb
-</header>
-
-<!-- MENU -->
+</div>
 
 <div class="menu">
 
-<button onclick="showPage('home')">
+<button onclick="openPage('home')">
 🏠
 </button>
 
-<button onclick="showPage('create')">
+<button onclick="openPage('create')">
 ➕
 </button>
 
-<button onclick="showPage('chat')">
+<button onclick="openPage('chat')">
 💬
 </button>
 
-<button onclick="showPage('profile')">
+<button onclick="openPage('profile')">
 👤
 </button>
 
@@ -178,12 +121,11 @@ margin-bottom:20px;
 
 <!-- HOME -->
 
-<div
-id="home"
-class="page active"
->
+<div id="home" class="page active">
 
-<div class="stories">
+<h2>Stories</h2>
+
+<div class="storybox">
 
 <div class="story">😄</div>
 <div class="story">🔥</div>
@@ -200,85 +142,64 @@ class="page active"
 
 <!-- CREATE -->
 
-<div
-id="create"
-class="page"
->
+<div id="create" class="page">
+
+<div class="card">
 
 <h2>Criar Post</h2>
 
-<input
-id="username"
-placeholder="Seu nome"
->
+<input id="name" placeholder="Seu nome">
 
 <textarea
-id="postText"
+id="text"
 placeholder="Compartilhe sua vibe..."
 ></textarea>
 
-<select id="mood">
-
-<option>😄 Feliz</option>
-<option>🔥 Motivado</option>
-<option>🌧️ Triste</option>
-<option>❤️ Apaixonado</option>
-
-</select>
-
-<button onclick="createPost()">
-
-Publicar ✨
-
+<button onclick="postar()">
+Publicar
 </button>
+
+</div>
 
 </div>
 
 <!-- CHAT -->
 
-<div
-id="chat"
-class="page"
->
+<div id="chat" class="page">
 
-<h2>💬 Chat</h2>
+<div class="card">
 
-<div id="messages"></div>
+<h2>Chat</h2>
+
+<div id="msgs"></div>
 
 <input
-id="chatInput"
+id="msgInput"
 placeholder="Digite..."
 >
 
-<button onclick="sendMessage()">
-
-Enviar 💜
-
+<button onclick="enviar()">
+Enviar
 </button>
+
+</div>
 
 </div>
 
 <!-- PROFILE -->
 
-<div
-id="profile"
-class="page"
->
+<div id="profile" class="page">
 
-<div class="profile">
+<div class="card">
 
-<div class="avatar"></div>
+<h2>Duda Maia 💜</h2>
 
-<h2>Duda Maia</h2>
-
-<p id="followers">
-❤️ 120 seguidores
+<p id="seguidores">
+120 seguidores
 </p>
 
-<button onclick="followUser()">
-
-Seguir 💜
-
+<button onclick="seguir()">
+Seguir
 </button>
 
 </div>
@@ -287,93 +208,64 @@ Seguir 💜
 
 <script>
 
-/* TROCAR PÁGINA */
+function openPage(id){
 
-function showPage(pageId){
+document
+.querySelectorAll('.page')
+.forEach(p=>{
 
-const pages =
-document.querySelectorAll('.page');
+p.style.display='none';
 
-pages.forEach(page=>{
-page.classList.remove('active');
 });
 
 document
-.getElementById(pageId)
-.classList.add('active');
+.getElementById(id)
+.style.display='block';
 
 }
 
-/* POSTS */
+let posts=[];
 
-let posts = [];
+function postar(){
 
-function createPost(){
+let nome =
+document.getElementById('name').value;
 
-const username =
-document.getElementById(
-'username'
-).value;
-
-const text =
-document.getElementById(
-'postText'
-).value;
-
-const mood =
-document.getElementById(
-'mood'
-).value;
-
-if(username==='' || text===''){
-return;
-}
+let texto =
+document.getElementById('text').value;
 
 posts.unshift({
-username,
-text,
-mood,
+nome,
+texto,
 likes:0
 });
 
-renderPosts();
+mostrarPosts();
 
-showPage('home');
+openPage('home');
 
 }
 
-/* RENDER POSTS */
+function mostrarPosts(){
 
-function renderPosts(){
-
-const feed =
-document.getElementById(
-'feed'
-);
+let feed =
+document.getElementById('feed');
 
 feed.innerHTML='';
 
-posts.forEach((post,index)=>{
+posts.forEach((p,i)=>{
 
 feed.innerHTML += `
 
-<div class="post">
+<div class="card">
 
-<h3>
-${post.username}
-</h3>
+<h3>${p.nome}</h3>
 
-<p>
-${post.mood}
-</p>
+<p>${p.texto}</p>
 
-<p>
-${post.text}
-</p>
+<button onclick="curtir(${i})">
 
-<button onclick="likePost(${index})">
-
-❤️ ${post.likes}
+❤️ ${p.likes}
 
 </button>
 
@@ -385,34 +277,25 @@ ${post.text}
 
 }
 
-/* CURTIR */
+function curtir(i){
 
-function likePost(index){
+posts[i].likes++;
 
-posts[index].likes++;
-
-renderPosts();
+mostrarPosts();
 
 }
 
-/* CHAT */
+function enviar(){
 
-function sendMessage(){
+let input =
+document.getElementById('msgInput');
 
-const input =
-document.getElementById(
-'chatInput'
-);
+let msgs =
+document.getElementById('msgs');
 
-if(input.value===''){
-return;
-}
+msgs.innerHTML += `
 
-document.getElementById(
-'messages'
-).innerHTML += `
-
-<div class="message">
+<div class="card">
 
 💜 ${input.value}
 
@@ -424,27 +307,19 @@ input.value='';
 
 }
 
-/* FOLLOW */
+let seg = 120;
 
-let followers = 120;
+function seguir(){
 
-function followUser(){
-
-followers++;
+seg++;
 
 document.getElementById(
-'followers'
+'seguidores'
 ).innerHTML =
 
-'❤️ ' +
-followers +
-' seguidores';
+seg + ' seguidores';
 
 }
-
-/* INICIAR */
-
-renderPosts();
 
 </script>
 
