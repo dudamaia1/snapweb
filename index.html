@@ -5,35 +5,180 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>SnapWeb</title>
 
-<link
-rel="stylesheet"
-href="style.css"
-/>
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+}
+
+/* HEADER */
+
+header{
+background:#1c1c1c;
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+/* MENU */
+
+.menu{
+display:flex;
+justify-content:space-around;
+background:#222;
+padding:10px;
+position:sticky;
+top:0;
+}
+
+.menu button{
+background:none;
+border:none;
+color:white;
+font-size:24px;
+}
+
+/* PÁGINAS */
+
+.page{
+display:none;
+padding:20px;
+}
+
+.active{
+display:block;
+}
+
+/* STORIES */
+
+.stories{
+display:flex;
+gap:10px;
+overflow:auto;
+margin-bottom:20px;
+}
+
+.story{
+min-width:70px;
+height:70px;
+border-radius:50%;
+background:linear-gradient(
+135deg,
+#ff0080,
+#5f00ff
+);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+}
+
+/* POSTS */
+
+.post{
+background:#1e1e1e;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+/* INPUTS */
+
+input,
+textarea,
+select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+background:#2a2a2a;
+color:white;
+}
+
+/* BOTÕES */
+
+button{
+padding:12px;
+border:none;
+border-radius:999px;
+background:#ff0080;
+color:white;
+margin-top:10px;
+}
+
+/* CHAT */
+
+.message{
+background:#2a2a2a;
+padding:10px;
+border-radius:10px;
+margin-top:10px;
+}
+
+/* PERFIL */
+
+.profile{
+text-align:center;
+}
+
+.avatar{
+width:120px;
+height:120px;
+border-radius:50%;
+background:linear-gradient(
+135deg,
+#ff0080,
+#5f00ff
+);
+margin:auto;
+margin-bottom:20px;
+}
+
+</style>
 
 </head>
 
 <body>
 
 <header>
-
-<h1>✨ SnapWeb</h1>
-
-<p>
-Compartilhe sua vibe 💜
-</p>
-
+✨ SnapWeb
 </header>
+
+<!-- MENU -->
+
+<div class="menu">
+
+<button onclick="showPage('home')">
+🏠
+</button>
+
+<button onclick="showPage('create')">
+➕
+</button>
+
+<button onclick="showPage('chat')">
+💬
+</button>
+
+<button onclick="showPage('profile')">
+👤
+</button>
+
+</div>
 
 <!-- HOME -->
 
-<section
+<div
 id="home"
 class="page active"
 >
@@ -47,48 +192,25 @@ class="page active"
 
 </div>
 
+<h2>Feed</h2>
+
 <div id="feed"></div>
 
-</section>
-
-<!-- EXPLORAR -->
-
-<section
-id="explore"
-class="page"
->
-
-<h2>🔍 Explorar</h2>
-
-<div class="card">
-🔥 Trends do momento
 </div>
 
-<div class="card">
-🎵 Músicas populares
-</div>
+<!-- CREATE -->
 
-<div class="card">
-💜 Pessoas com a mesma vibe
-</div>
-
-</section>
-
-<!-- CRIAR -->
-
-<section
+<div
 id="create"
 class="page"
 >
-
-<div class="card">
 
 <h2>Criar Post</h2>
 
 <input
 id="username"
 placeholder="Seu nome"
-/>
+>
 
 <textarea
 id="postText"
@@ -101,7 +223,6 @@ placeholder="Compartilhe sua vibe..."
 <option>🔥 Motivado</option>
 <option>🌧️ Triste</option>
 <option>❤️ Apaixonado</option>
-<option>🌙 Reflexivo</option>
 
 </select>
 
@@ -113,16 +234,14 @@ Publicar ✨
 
 </div>
 
-</section>
-
 <!-- CHAT -->
 
-<section
+<div
 id="chat"
 class="page"
 >
 
-<h2>💬 Social</h2>
+<h2>💬 Chat</h2>
 
 <div id="messages"></div>
 
@@ -137,50 +256,11 @@ Enviar 💜
 
 </button>
 
-</section>
-
-<!-- MEMÓRIAS -->
-
-<section
-id="memories"
-class="page"
->
-
-<h2>📖 Memórias</h2>
-
-<div class="card">
-📼 Há 1 ano você estava feliz ✨
 </div>
 
-<div class="card">
-🌙 Sua vibe mais usada:
-Reflexivo
-</div>
+<!-- PROFILE -->
 
-</section>
-
-<!-- ALERTAS -->
-
-<section
-id="alerts"
-class="page"
->
-
-<h2>🚨 Alertas</h2>
-
-<div class="card">
-🌧️ Chuva forte na região
-</div>
-
-<div class="card">
-🐶 Animal perdido próximo
-</div>
-
-</section>
-
-<!-- PERFIL -->
-
-<section
+<div
 id="profile"
 class="page"
 >
@@ -190,10 +270,6 @@ class="page"
 <div class="avatar"></div>
 
 <h2>Duda Maia</h2>
-
-<p>
-✨ Sua energia conecta pessoas
-</p>
 
 <p id="followers">
 ❤️ 120 seguidores
@@ -207,43 +283,170 @@ Seguir 💜
 
 </div>
 
-</section>
+</div>
 
-<!-- MENU -->
+<script>
 
-<nav class="bottom-menu">
+/* TROCAR PÁGINA */
 
-<button onclick="showPage('home')">
-🏠
+function showPage(pageId){
+
+const pages =
+document.querySelectorAll('.page');
+
+pages.forEach(page=>{
+page.classList.remove('active');
+});
+
+document
+.getElementById(pageId)
+.classList.add('active');
+
+}
+
+/* POSTS */
+
+let posts = [];
+
+function createPost(){
+
+const username =
+document.getElementById(
+'username'
+).value;
+
+const text =
+document.getElementById(
+'postText'
+).value;
+
+const mood =
+document.getElementById(
+'mood'
+).value;
+
+if(username==='' || text===''){
+return;
+}
+
+posts.unshift({
+username,
+text,
+mood,
+likes:0
+});
+
+renderPosts();
+
+showPage('home');
+
+}
+
+/* RENDER POSTS */
+
+function renderPosts(){
+
+const feed =
+document.getElementById(
+'feed'
+);
+
+feed.innerHTML='';
+
+posts.forEach((post,index)=>{
+
+feed.innerHTML += `
+
+<div class="post">
+
+<h3>
+${post.username}
+</h3>
+
+<p>
+${post.mood}
+</p>
+
+<p>
+${post.text}
+</p>
+
+<button onclick="likePost(${index})">
+
+❤️ ${post.likes}
+
 </button>
 
-<button onclick="showPage('explore')">
-🔍
-</button>
+</div>
 
-<button onclick="showPage('create')">
-➕
-</button>
+`;
 
-<button onclick="showPage('chat')">
-💬
-</button>
+});
 
-<button onclick="showPage('memories')">
-📖
-</button>
+}
 
-<button onclick="showPage('alerts')">
-🚨
-</button>
+/* CURTIR */
 
-<button onclick="showPage('profile')">
-👤
-</button>
+function likePost(index){
 
-</nav>
+posts[index].likes++;
 
-<script src="script.js"></script>
+renderPosts();
+
+}
+
+/* CHAT */
+
+function sendMessage(){
+
+const input =
+document.getElementById(
+'chatInput'
+);
+
+if(input.value===''){
+return;
+}
+
+document.getElementById(
+'messages'
+).innerHTML += `
+
+<div class="message">
+
+💜 ${input.value}
+
+</div>
+
+`;
+
+input.value='';
+
+}
+
+/* FOLLOW */
+
+let followers = 120;
+
+function followUser(){
+
+followers++;
+
+document.getElementById(
+'followers'
+).innerHTML =
+
+'❤️ ' +
+followers +
+' seguidores';
+
+}
+
+/* INICIAR */
+
+renderPosts();
+
+</script>
 
 </body>
 </html>
