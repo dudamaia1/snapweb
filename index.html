@@ -1,534 +1,213 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!-- ===== VIBE DO DIA ===== -->
 
-<head>
+<div class="card">
 
-<meta charset="UTF-8">
+<h2>🌈 Vibe do Dia</h2>
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+<select id="dailyMood">
 
-<title>SnapWeb</title>
+<option>😄 Feliz</option>
+<option>🔥 Motivado</option>
+<option>🌧️ Triste</option>
+<option>❤️ Apaixonado</option>
+<option>🌙 Reflexivo</option>
 
-<style>
+</select>
 
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(
-135deg,
-#5f00ff,
-#ff0080,
-#ff7a00
-);
-color:white;
-}
+<button onclick="changeVibe()">
+Atualizar Vibe ✨
+</button>
 
-header{
-padding:20px;
-text-align:center;
-font-size:32px;
-font-weight:bold;
-background:rgba(0,0,0,.3);
-backdrop-filter:blur(10px);
-}
+</div>
 
-.container{
-padding:20px;
-padding-bottom:120px;
-}
-
-.card{
-background:rgba(0,0,0,.3);
-padding:20px;
-border-radius:20px;
-margin-bottom:20px;
-backdrop-filter:blur(10px);
-box-shadow:0 0 20px
-rgba(255,0,128,.4);
-}
-
-input,
-textarea,
-select{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-background:rgba(255,255,255,.15);
-color:white;
-}
-
-button{
-width:100%;
-padding:14px;
-margin-top:10px;
-border:none;
-border-radius:999px;
-background:#ff0080;
-color:white;
-font-size:18px;
-}
-
-.bottom-menu{
-
-position:fixed;
-
-bottom:0;
-
-left:0;
-
-right:0;
-
-background:rgba(0,0,0,.6);
-
-display:flex;
-
-justify-content:space-around;
-
-padding:12px;
-
-backdrop-filter:blur(10px);
-
-}
-
-.bottom-menu button{
-
-width:auto;
-
-font-size:24px;
-
-background:none;
-
-}
-
-.hidden{
-display:none;
-}
-
-.message{
-
-background:rgba(255,255,255,.15);
-
-padding:10px;
-
-border-radius:12px;
-
-margin-top:10px;
-
-}
-
-.story{
-
-min-width:70px;
-
-height:70px;
-
-border-radius:50%;
-
-background:linear-gradient(
-135deg,
-#ff0080,
-#5f00ff
-);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:30px;
-
-}
-
-.stories{
-
-display:flex;
-
-gap:10px;
-
-overflow:auto;
-
-}
-
-.dark{
-
-background:black;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-✨ SnapWeb 💜
-</header>
-
-<div class="container">
-
-<!-- HOME -->
-
-<div id="home">
-
-<!-- STORIES -->
+<!-- ===== STORIES ===== -->
 
 <div class="card">
 
 <h2>📷 Stories</h2>
 
-<div class="stories">
+<div id="stories"
+style="
+display:flex;
+gap:10px;
+overflow:auto;
+">
 
-<div class="story">😄</div>
-<div class="story">🔥</div>
-<div class="story">❤️</div>
-<div class="story">🌙</div>
+<div class="story">
+😄
+</div>
 
+<div class="story">
+🔥
+</div>
+
+<div class="story">
+❤️
+</div>
+
+<div class="story">
+🌙
 </div>
 
 </div>
 
-<!-- CRIAR POST -->
+</div>
+
+<!-- ===== MINI VIDEOS ===== -->
 
 <div class="card">
 
-<h2>Criar Post</h2>
+<h2>🎥 Mini Vídeos</h2>
 
-<input
-id="username"
-placeholder="Seu nome"
+<video
+controls
+width="100%"
+style="border-radius:20px;"
 >
 
-<textarea
-id="postText"
-placeholder="Compartilhe sua vibe..."
-></textarea>
-
-<select id="mood">
-
-<option>😄 Feliz</option>
-<option>🔥 Motivado</option>
-<option>❤️ Apaixonado</option>
-<option>🌧️ Triste</option>
-<option>🌙 Reflexivo</option>
-
-</select>
-
-<button onclick="createPost()">
-Publicar ✨
-</button>
-
-</div>
-
-<!-- FEED -->
-
-<div id="feed"></div>
-
-</div>
-
-<!-- SOCIAL -->
-
-<div id="social" class="hidden">
-
-<div class="card">
-
-<h2>💬 Chat</h2>
-
-<div id="chat"></div>
-
-<input
-id="chatInput"
-placeholder="Digite..."
+<source
+src="https://www.w3schools.com/html/mov_bbb.mp4"
+type="video/mp4"
 >
 
-<button onclick="sendMessage()">
-Enviar 💜
-</button>
+</video>
 
 </div>
 
-</div>
-
-<!-- PERFIL -->
-
-<div id="profile" class="hidden">
+<!-- ===== SEGUIDORES ===== -->
 
 <div class="card">
 
-<h2>👤 Perfil</h2>
+<h2>❤️ Seguidores</h2>
 
-<p>
-Usuário SnapWeb ✨
+<p id="followers">
+120 seguidores
 </p>
 
-<p>
-❤️ Seguidores: 120
-</p>
-
-<button onclick="follow()">
+<button onclick="followUser()">
 Seguir 💜
 </button>
 
 </div>
 
-<!-- MÚSICA -->
-
-<div class="card">
-
-<h2>🎵 Música</h2>
-
-<input
-id="musicInput"
-placeholder="Cole link da música"
->
-
-<button onclick="saveMusic()">
-Salvar Música 🎶
-</button>
-
-<div id="musicResult"></div>
-
-</div>
-
-<!-- NOTIFICAÇÕES -->
+<!-- ===== NOTIFICAÇÕES ===== -->
 
 <div class="card">
 
 <h2>🔔 Notificações</h2>
 
+<div id="notifications">
+
 <div class="message">
 ✨ Bem-vinda ao SnapWeb
 </div>
 
-<div class="message">
-🔥 Seu post recebeu curtidas
 </div>
 
 </div>
 
-<!-- ALERTAS -->
+<!-- ===== IA EMOCIONAL ===== -->
 
 <div class="card">
 
-<h2>🚨 Alertas</h2>
+<h2>🤖 IA Emocional</h2>
 
-<div class="message">
-🌧️ Chuva forte na cidade
-</div>
-
-<div class="message">
-🐶 Cachorro perdido
-</div>
-
-</div>
-
-<!-- DARK MODE -->
-
-<div class="card">
-
-<h2>🌙 Tema</h2>
-
-<button onclick="darkMode()">
-Ativar modo escuro
+<button onclick="aiEmotion()">
+Analisar Humor 💜
 </button>
 
-</div>
-
-</div>
-
-</div>
-
-<!-- MENU -->
-
-<div class="bottom-menu">
-
-<button onclick="showTab('home')">
-🏠
-</button>
-
-<button onclick="showTab('social')">
-🫂
-</button>
-
-<button onclick="showTab('profile')">
-👤
-</button>
+<div id="aiResult"></div>
 
 </div>
 
 <script>
 
-let posts = [];
+/* ===== VIBE ===== */
 
-function createPost(){
-
-const username =
-document.getElementById(
-'username'
-).value;
-
-const text =
-document.getElementById(
-'postText'
-).value;
+function changeVibe(){
 
 const mood =
 document.getElementById(
-'mood'
+'dailyMood'
 ).value;
 
-posts.unshift({
-username,
-text,
-mood,
-likes:0
-});
-
-renderPosts();
-}
-
-function renderPosts(){
-
-const feed =
-document.getElementById(
-'feed'
-);
-
-feed.innerHTML='';
-
-posts.forEach((post,index)=>{
-
-feed.innerHTML += `
-
-<div class="card">
-
-<h2>
-${post.username}
-</h2>
-
-<p>${post.mood}</p>
-
-<p>${post.text}</p>
-
-<button onclick="likePost(${index})">
-
-❤️ Curtir ${post.likes}
-
-</button>
-
-</div>
-
+document.body.style.background = `
+linear-gradient(
+135deg,
+#5f00ff,
+#ff0080,
+#ff7a00
+)
 `;
 
-});
+addNotification(
+'🌈 Sua vibe mudou para ' + mood
+);
 
 }
 
-function likePost(index){
+/* ===== SEGUIDORES ===== */
 
-posts[index].likes++;
+let followers = 120;
 
-renderPosts();
+function followUser(){
+
+followers++;
+
+document.getElementById(
+'followers'
+).innerHTML =
+followers + ' seguidores';
+
+addNotification(
+'❤️ Novo seguidor!'
+);
 
 }
 
-function sendMessage(){
+/* ===== NOTIFICAÇÕES ===== */
 
-const input =
+function addNotification(text){
+
 document.getElementById(
-'chatInput'
-);
-
-const chat =
-document.getElementById(
-'chat'
-);
-
-if(input.value.trim()==='')
-return;
-
-chat.innerHTML += `
+'notifications'
+).innerHTML += `
 
 <div class="message">
 
-💜 ${input.value}
+${text}
 
 </div>
 
 `;
 
-input.value='';
-
 }
 
-function showTab(tabId){
+/* ===== IA ===== */
 
+function aiEmotion(){
+
+const result =
 document.getElementById(
-'home'
-).classList.add('hidden');
+'aiResult'
+);
 
-document.getElementById(
-'social'
-).classList.add('hidden');
+result.innerHTML = `
 
-document.getElementById(
-'profile'
-).classList.add('hidden');
+<div class="message">
 
-document.getElementById(
-tabId
-).classList.remove('hidden');
+💜 IA:
+Continue compartilhando
+sua energia positiva ✨
 
-}
-
-function saveMusic(){
-
-const music =
-document.getElementById(
-'musicInput'
-).value;
-
-document.getElementById(
-'musicResult'
-).innerHTML = `
-
-<a
-href="${music}"
-target="_blank"
-style="color:white;"
->
-
-🎵 Abrir Música
-
-</a>
+</div>
 
 `;
 
-}
-
-function follow(){
-
-alert(
-'💜 Agora você está seguindo!'
-);
-
-}
-
-function darkMode(){
-
-document.body.classList.toggle(
-'dark'
+addNotification(
+'🤖 IA analisou seu humor'
 );
 
 }
 
 </script>
-
-</body>
-</html>
