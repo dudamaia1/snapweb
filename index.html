@@ -17,112 +17,244 @@ content="width=device-width, initial-scale=1.0"
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(
-135deg,
-#5f00ff,
-#ff0080,
-#ff7a00
-);
+background:#0f0f0f;
 color:white;
-padding-bottom:100px;
+overflow:hidden;
 }
+
+/* HEADER */
 
 header{
-text-align:center;
-padding:30px;
-background:rgba(0,0,0,.3);
+
+height:70px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+font-weight:bold;
+
+background:rgba(0,0,0,.7);
+
 backdrop-filter:blur(10px);
+
+border-bottom:1px solid
+rgba(255,255,255,.1);
+
 }
 
-.stories{
-display:flex;
-gap:10px;
+/* PAGES */
+
+.page{
+
+position:absolute;
+
+top:70px;
+
+bottom:80px;
+
+left:0;
+
+right:0;
+
 overflow:auto;
+
 padding:20px;
+
+display:none;
+
+}
+
+.active{
+display:block;
+}
+
+/* STORIES */
+
+.stories{
+
+display:flex;
+
+gap:12px;
+
+overflow:auto;
+
+margin-bottom:20px;
+
 }
 
 .story{
+
 min-width:70px;
+
 height:70px;
+
 border-radius:50%;
+
 background:linear-gradient(
 135deg,
 #ff0080,
 #5f00ff
 );
+
 display:flex;
+
 justify-content:center;
+
 align-items:center;
+
 font-size:30px;
+
 box-shadow:0 0 20px
-rgba(255,0,128,.6);
+rgba(255,0,128,.5);
+
 }
 
-.card{
-background:rgba(0,0,0,.3);
-margin:20px;
+/* POSTS */
+
+.post{
+
+background:#1a1a1a;
+
 padding:20px;
+
 border-radius:20px;
-backdrop-filter:blur(10px);
+
+margin-bottom:20px;
+
+}
+
+.post button{
+
+background:#ff0080;
+
+border:none;
+
+padding:10px 20px;
+
+border-radius:999px;
+
+color:white;
+
+margin-top:10px;
+
+}
+
+/* CREATE */
+
+.create-post{
+
+background:#1a1a1a;
+
+padding:20px;
+
+border-radius:20px;
+
 }
 
 input,
 textarea,
 select{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-background:rgba(255,255,255,.15);
-color:white;
-}
 
-button{
 width:100%;
+
 padding:14px;
+
 margin-top:10px;
+
 border:none;
-border-radius:999px;
-background:#ff0080;
+
+border-radius:14px;
+
+background:#2a2a2a;
+
 color:white;
-font-size:18px;
+
 }
 
-.post{
-background:rgba(0,0,0,.3);
-margin:20px;
-padding:20px;
-border-radius:20px;
-}
+/* CHAT */
 
 .message{
-background:rgba(255,255,255,.15);
-padding:10px;
+
+background:#2a2a2a;
+
+padding:12px;
+
 border-radius:12px;
+
 margin-top:10px;
+
 }
 
+/* PROFILE */
+
+.profile{
+
+text-align:center;
+
+}
+
+.avatar{
+
+width:120px;
+
+height:120px;
+
+border-radius:50%;
+
+background:linear-gradient(
+135deg,
+#ff0080,
+#5f00ff
+);
+
+margin:auto;
+
+margin-top:20px;
+
+}
+
+/* MENU */
+
 .bottom-menu{
+
 position:fixed;
+
 bottom:0;
+
 left:0;
+
 right:0;
-background:rgba(0,0,0,.5);
+
+height:80px;
+
+background:#111;
+
 display:flex;
+
 justify-content:space-around;
-padding:12px;
-backdrop-filter:blur(10px);
+
+align-items:center;
+
+border-top:1px solid
+rgba(255,255,255,.1);
+
 }
 
 .bottom-menu button{
-width:auto;
-background:none;
-font-size:24px;
-}
 
-.hidden{
-display:none;
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:28px;
+
 }
 
 </style>
@@ -132,16 +264,15 @@ display:none;
 <body>
 
 <header>
-
-<h1>✨ SnapWeb</h1>
-
-<p>
-Compartilhe sua vibe 💜
-</p>
-
+✨ SnapWeb
 </header>
 
-<!-- STORIES -->
+<!-- HOME -->
+
+<div
+id="home"
+class="page active"
+>
 
 <div class="stories">
 
@@ -152,11 +283,18 @@ Compartilhe sua vibe 💜
 
 </div>
 
-<!-- HOME -->
+<div id="feed"></div>
 
-<div id="home">
+</div>
 
-<div class="card">
+<!-- CREATE -->
+
+<div
+id="create"
+class="page"
+>
+
+<div class="create-post">
 
 <h2>Criar Post</h2>
 
@@ -187,24 +325,23 @@ Publicar ✨
 
 </div>
 
-<div id="feed"></div>
-
 </div>
 
 <!-- CHAT -->
 
-<div id="chatPage" class="hidden">
+<div
+id="chat"
+class="page"
+>
 
-<div class="card">
+<h2>💬 Social</h2>
 
-<h2>💬 Chat</h2>
-
-<div id="chatMessages"></div>
+<div id="messages"></div>
 
 <input
 id="chatInput"
 placeholder="Digite..."
-/>
+>
 
 <button onclick="sendMessage()">
 
@@ -214,22 +351,25 @@ Enviar 💜
 
 </div>
 
-</div>
+<!-- PROFILE -->
 
-<!-- PERFIL -->
+<div
+id="profile"
+class="page"
+>
 
-<div id="profilePage" class="hidden">
+<div class="profile">
 
-<div class="card">
+<div class="avatar"></div>
 
-<h2>👤 Perfil</h2>
+<h2>Duda Maia</h2>
 
 <p>
-✨ Usuário SnapWeb
+✨ Sua energia conecta pessoas
 </p>
 
 <p id="followers">
-❤️ Seguidores: 120
+❤️ 120 seguidores
 </p>
 
 <button onclick="followUser()">
@@ -250,11 +390,15 @@ Seguir 💜
 🏠
 </button>
 
-<button onclick="showPage('chatPage')">
+<button onclick="showPage('create')">
+➕
+</button>
+
+<button onclick="showPage('chat')">
 💬
 </button>
 
-<button onclick="showPage('profilePage')">
+<button onclick="showPage('profile')">
 👤
 </button>
 
@@ -263,6 +407,26 @@ Seguir 💜
 <script>
 
 let posts = [];
+
+function showPage(pageId){
+
+document.querySelectorAll(
+'.page'
+).forEach(page=>{
+
+page.classList.remove(
+'active'
+);
+
+});
+
+document.getElementById(
+pageId
+).classList.add(
+'active'
+);
+
+}
 
 function createPost(){
 
@@ -289,6 +453,8 @@ likes:0
 });
 
 renderPosts();
+
+showPage('home');
 
 }
 
@@ -350,7 +516,7 @@ document.getElementById(
 
 const messages =
 document.getElementById(
-'chatMessages'
+'messages'
 );
 
 if(input.value.trim()==='')
@@ -380,27 +546,7 @@ document.getElementById(
 'followers'
 ).innerHTML =
 
-'❤️ Seguidores: ' + followers;
-
-}
-
-function showPage(pageId){
-
-document.getElementById(
-'home'
-).classList.add('hidden');
-
-document.getElementById(
-'chatPage'
-).classList.add('hidden');
-
-document.getElementById(
-'profilePage'
-).classList.add('hidden');
-
-document.getElementById(
-pageId
-).classList.remove('hidden');
+'❤️ ' + followers + ' seguidores';
 
 }
 
