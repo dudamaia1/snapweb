@@ -1,207 +1,534 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SnapWeb Interativo</title>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>SnapWeb</title>
+
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
+
 body{
-  margin:0;
-  background:linear-gradient(135deg,#5f00ff,#ff0080,#ff7a00);
-  color:#fff;
-  min-height:100vh;
+margin:0;
+font-family:Arial;
+background:linear-gradient(
+135deg,
+#5f00ff,
+#ff0080,
+#ff7a00
+);
+color:white;
 }
+
 header{
-  position:sticky;top:0;z-index:10;
-  background:rgba(0,0,0,.25);
-  backdrop-filter:blur(10px);
-  padding:18px;
-  text-align:center;
-  font-size:30px;
-  font-weight:bold;
+padding:20px;
+text-align:center;
+font-size:32px;
+font-weight:bold;
+background:rgba(0,0,0,.3);
+backdrop-filter:blur(10px);
 }
-.container{max-width:700px;margin:auto;padding:20px 20px 100px}
+
+.container{
+padding:20px;
+padding-bottom:120px;
+}
+
 .card{
-  background:rgba(0,0,0,.35);
-  border-radius:24px;
-  padding:20px;
-  margin-bottom:20px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 8px 30px rgba(0,0,0,.25);
+background:rgba(0,0,0,.3);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px
+rgba(255,0,128,.4);
 }
-input, textarea, select{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:rgba(255,255,255,.15);
-  color:#fff;
+
+input,
+textarea,
+select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,.15);
+color:white;
 }
-input::placeholder, textarea::placeholder{color:#eee}
+
 button{
-  border:none;
-  border-radius:999px;
-  padding:10px 14px;
-  cursor:pointer;
-  background:rgba(255,255,255,.15);
-  color:#fff;
-  margin-top:10px;
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:999px;
+background:#ff0080;
+color:white;
+font-size:18px;
 }
-button:hover{background:rgba(255,255,255,.25)}
-.primary{
-  background:linear-gradient(90deg,#ff7a00,#ff0080);
-  width:100%;
-  font-weight:bold;
+
+.bottom-menu{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+right:0;
+
+background:rgba(0,0,0,.6);
+
+display:flex;
+
+justify-content:space-around;
+
+padding:12px;
+
+backdrop-filter:blur(10px);
+
 }
-.user{font-size:22px;font-weight:bold}
-.mood{color:#ffd6f2;margin:8px 0}
-.text{font-size:18px;margin:12px 0}
-.reactions{display:flex;gap:8px;flex-wrap:wrap}
-.count{font-weight:bold}
-.nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(12px);
-  display:flex;justify-content:space-around;
-  padding:12px;
+
+.bottom-menu button{
+
+width:auto;
+
+font-size:24px;
+
+background:none;
+
 }
-.nav div{text-align:center;font-size:14px}
-.hidden{display:none}
+
+.hidden{
+display:none;
+}
+
+.message{
+
+background:rgba(255,255,255,.15);
+
+padding:10px;
+
+border-radius:12px;
+
+margin-top:10px;
+
+}
+
+.story{
+
+min-width:70px;
+
+height:70px;
+
+border-radius:50%;
+
+background:linear-gradient(
+135deg,
+#ff0080,
+#5f00ff
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:30px;
+
+}
+
+.stories{
+
+display:flex;
+
+gap:10px;
+
+overflow:auto;
+
+}
+
+.dark{
+
+background:black;
+
+}
+
 </style>
+
 </head>
+
 <body>
-<header>✨ SnapWeb 💜</header>
+
+<header>
+✨ SnapWeb 💜
+</header>
 
 <div class="container">
-  <div class="card">
-    <h2>Criar Post</h2>
-    <input id="userInput" placeholder="Seu nome" value="Duda Maia">
-    <select id="moodInput">
-      <option>😄 Feliz</option>
-      <option>🔥 Motivada</option>
-      <option>❤️ Apaixonada</option>
-      <option>🌧️ Triste</option>
-      <option>🌙 Reflexiva</option>
-      <option>😂 Engraçada</option>
-    </select>
-    <textarea id="textInput" rows="4" placeholder="Compartilhe sua vibe..."></textarea>
-    <button class="primary" onclick="addPost()">Publicar ✨</button>
-  </div>
 
-  <div id="feed"></div>
+<!-- HOME -->
+
+<div id="home">
+
+<!-- STORIES -->
+
+<div class="card">
+
+<h2>📷 Stories</h2>
+
+<div class="stories">
+
+<div class="story">😄</div>
+<div class="story">🔥</div>
+<div class="story">❤️</div>
+<div class="story">🌙</div>
+
 </div>
 
-<div class="nav">
-  <div onclick="scrollToTop()">🏠<br>Início</div>
-  <div onclick="alert('Explorar em breve!')">🔍<br>Explorar</div>
-  <div onclick="document.getElementById('textInput').focus()">➕<br>Criar</div>
-  <div onclick="alert('Perfil em breve!')">👤<br>Perfil</div>
+</div>
+
+<!-- CRIAR POST -->
+
+<div class="card">
+
+<h2>Criar Post</h2>
+
+<input
+id="username"
+placeholder="Seu nome"
+>
+
+<textarea
+id="postText"
+placeholder="Compartilhe sua vibe..."
+></textarea>
+
+<select id="mood">
+
+<option>😄 Feliz</option>
+<option>🔥 Motivado</option>
+<option>❤️ Apaixonado</option>
+<option>🌧️ Triste</option>
+<option>🌙 Reflexivo</option>
+
+</select>
+
+<button onclick="createPost()">
+Publicar ✨
+</button>
+
+</div>
+
+<!-- FEED -->
+
+<div id="feed"></div>
+
+</div>
+
+<!-- SOCIAL -->
+
+<div id="social" class="hidden">
+
+<div class="card">
+
+<h2>💬 Chat</h2>
+
+<div id="chat"></div>
+
+<input
+id="chatInput"
+placeholder="Digite..."
+>
+
+<button onclick="sendMessage()">
+Enviar 💜
+</button>
+
+</div>
+
+</div>
+
+<!-- PERFIL -->
+
+<div id="profile" class="hidden">
+
+<div class="card">
+
+<h2>👤 Perfil</h2>
+
+<p>
+Usuário SnapWeb ✨
+</p>
+
+<p>
+❤️ Seguidores: 120
+</p>
+
+<button onclick="follow()">
+Seguir 💜
+</button>
+
+</div>
+
+<!-- MÚSICA -->
+
+<div class="card">
+
+<h2>🎵 Música</h2>
+
+<input
+id="musicInput"
+placeholder="Cole link da música"
+>
+
+<button onclick="saveMusic()">
+Salvar Música 🎶
+</button>
+
+<div id="musicResult"></div>
+
+</div>
+
+<!-- NOTIFICAÇÕES -->
+
+<div class="card">
+
+<h2>🔔 Notificações</h2>
+
+<div class="message">
+✨ Bem-vinda ao SnapWeb
+</div>
+
+<div class="message">
+🔥 Seu post recebeu curtidas
+</div>
+
+</div>
+
+<!-- ALERTAS -->
+
+<div class="card">
+
+<h2>🚨 Alertas</h2>
+
+<div class="message">
+🌧️ Chuva forte na cidade
+</div>
+
+<div class="message">
+🐶 Cachorro perdido
+</div>
+
+</div>
+
+<!-- DARK MODE -->
+
+<div class="card">
+
+<h2>🌙 Tema</h2>
+
+<button onclick="darkMode()">
+Ativar modo escuro
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MENU -->
+
+<div class="bottom-menu">
+
+<button onclick="showTab('home')">
+🏠
+</button>
+
+<button onclick="showTab('social')">
+🫂
+</button>
+
+<button onclick="showTab('profile')">
+👤
+</button>
+
 </div>
 
 <script>
-let posts = [
-  {
-    user: 'Duda Maia',
-    mood: '😄 Feliz',
-    text: 'Hoje foi um dia incrível! ✨',
-    reactions: {'🔥 Vibrei': 0, '💫 Me identifiquei': 0, '🌱 Me ajudou': 0}
-  },
-  {
-    user: 'Pedro',
-    mood: '❤️ Apaixonado',
-    text: 'A saudade bateu forte hoje.',
-    reactions: {'🖤 Forte isso': 0, '💫 Me identifiquei': 0}
-  }
-];
 
-function savePosts() {
-  localStorage.setItem('snapweb_posts', JSON.stringify(posts));
-}
+let posts = [];
 
-function loadPosts() {
-  const saved = localStorage.getItem('snapweb_posts');
-  if (saved) posts = JSON.parse(saved);
-}
+function createPost(){
 
-function renderPosts() {
-  const feed = document.getElementById('feed');
-  feed.innerHTML = '';
+const username =
+document.getElementById(
+'username'
+).value;
 
-  posts.slice().reverse().forEach((post, postIndexReversed) => {
-    const realIndex = posts.length - 1 - postIndexReversed;
+const text =
+document.getElementById(
+'postText'
+).value;
 
-    const card = document.createElement('div');
-    card.className = 'card';
+const mood =
+document.getElementById(
+'mood'
+).value;
 
-    let reactionsHtml = '';
-    for (const [name, count] of Object.entries(post.reactions)) {
-      reactionsHtml += `
-        <button onclick="react(${realIndex}, '${name.replace(/'/g, "\\'")}')">
-          ${name} <span class="count">${count}</span>
-        </button>
-      `;
-    }
+posts.unshift({
+username,
+text,
+mood,
+likes:0
+});
 
-    card.innerHTML = `
-      <div class="user">${post.user}</div>
-      <div class="mood">${post.mood}</div>
-      <div class="text">${post.text}</div>
-      <div class="reactions">${reactionsHtml}</div>
-      <button onclick="deletePost(${realIndex})">🗑️ Apagar</button>
-    `;
-
-    feed.appendChild(card);
-  });
-}
-
-function addPost() {
-  const user = document.getElementById('userInput').value.trim() || 'Usuário';
-  const mood = document.getElementById('moodInput').value;
-  const text = document.getElementById('textInput').value.trim();
-
-  if (!text) {
-    alert('Digite algo para publicar.');
-    return;
-  }
-
-  posts.push({
-    user,
-    mood,
-    text,
-    reactions: {
-      '🔥 Vibrei': 0,
-      '💫 Me identifiquei': 0,
-      '🌱 Me ajudou': 0
-    }
-  });
-
-  document.getElementById('textInput').value = '';
-  savePosts();
-  renderPosts();
-}
-
-function react(index, reaction) {
-  posts[index].reactions[reaction]++;
-  savePosts();
-  renderPosts();
-}
-
-function deletePost(index) {
-  if (confirm('Deseja apagar este post?')) {
-    posts.splice(index, 1);
-    savePosts();
-    renderPosts();
-  }
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-loadPosts();
 renderPosts();
+}
+
+function renderPosts(){
+
+const feed =
+document.getElementById(
+'feed'
+);
+
+feed.innerHTML='';
+
+posts.forEach((post,index)=>{
+
+feed.innerHTML += `
+
+<div class="card">
+
+<h2>
+${post.username}
+</h2>
+
+<p>${post.mood}</p>
+
+<p>${post.text}</p>
+
+<button onclick="likePost(${index})">
+
+❤️ Curtir ${post.likes}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+function likePost(index){
+
+posts[index].likes++;
+
+renderPosts();
+
+}
+
+function sendMessage(){
+
+const input =
+document.getElementById(
+'chatInput'
+);
+
+const chat =
+document.getElementById(
+'chat'
+);
+
+if(input.value.trim()==='')
+return;
+
+chat.innerHTML += `
+
+<div class="message">
+
+💜 ${input.value}
+
+</div>
+
+`;
+
+input.value='';
+
+}
+
+function showTab(tabId){
+
+document.getElementById(
+'home'
+).classList.add('hidden');
+
+document.getElementById(
+'social'
+).classList.add('hidden');
+
+document.getElementById(
+'profile'
+).classList.add('hidden');
+
+document.getElementById(
+tabId
+).classList.remove('hidden');
+
+}
+
+function saveMusic(){
+
+const music =
+document.getElementById(
+'musicInput'
+).value;
+
+document.getElementById(
+'musicResult'
+).innerHTML = `
+
+<a
+href="${music}"
+target="_blank"
+style="color:white;"
+>
+
+🎵 Abrir Música
+
+</a>
+
+`;
+
+}
+
+function follow(){
+
+alert(
+'💜 Agora você está seguindo!'
+);
+
+}
+
+function darkMode(){
+
+document.body.classList.toggle(
+'dark'
+);
+
+}
+
 </script>
+
 </body>
 </html>
